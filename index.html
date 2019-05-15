@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>polynomial</title>
+    <style>
+      body {
+        padding: 0px;
+        margin: 0px;
+        background-color: rgb(250, 250, 250);
+      }
+      * {
+        font-family: Helvetica;
+      }
+      #header {
+        width: 100%;
+        background-color: rgb(50, 50, 50);
+        color: rgb(255, 255, 255);
+        font-size: 20pt;
+        margin: 0px;
+        padding: 20px;
+      }
+      #content {
+        margin: 0px 15% 10% 15%;
+        padding: 60px 40px 40px 40px;
+        background-color: rgb(255, 255, 255);
+        width: 70%;
+      }
+      p {
+        line-height: 16pt;
+        font-size: 16pt;
+        margin: 0px;
+      }
+      input {
+        width: 30px;
+      }
+      .small {
+        display: inline;
+        font-size: 10pt;
+        position: relative;
+        top: -5px;
+      }
+      .values, .pm {
+        display: inline;
+      }
+      button {
+        background-color: rgb(240, 240, 240);
+        border: 1px solid rgb(200, 200, 200);
+        color: rgb(50, 50, 50);
+        font-size: 10pt;
+      }
+      .line {
+        height: 1px;
+        width: 50%;
+        background-color: rgb(50, 50, 50);
+      }
+      #answer {
+        display: none;
+        background-color: rgb(250, 250, 250);
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="header"><b>polynomial</b></div>
+    <div id="content">
+      <p>Enter the polynomial to divide below.</p><br>
+      <div class="polynomial" id="poly0"></div><br>
+      <div class="line"></div><br>
+      <div class="polynomial" id="poly1"></div><br>
+      <button id="compute" onclick="compute()">Compute</button><br><br>
+      <div id="answer"></div>
+    </div>
+    <script>
+      var n = [];
+      function addNum(poly, power) {
+        if (power === undefined) {
+          power = n[poly].length;
+        }
+        n[poly].push(power);
+        var p = document.getElementById("poly" + poly);
+        p.innerHTML = "<div class='values' id='val" + poly + "-" + power + "'><input type='number' id='num" + poly + "-" + power + "' value='" + Math.round((Math.random() - 0.5) * 2 * 3) + "'> " + (power > 0 ? "x" + (power > 1 ? "<div class='small'>" + power + "</div>" : "") + "&nbsp&nbsp<div class='pm' id='pm" + poly + "-" + power + "'>+</div>" : "") + "&nbsp&nbsp</div>" + p.innerHTML;
+      }
+      function removeNum(poly, power) {
+        if (power === undefined) {
+          power = n[poly].length - 1;
+        }
+        n[poly].splice(power, 1);
+        document.getElementById("val" + poly + "-" + power).outerHTML = "";
+      }
+      var p = document.getElementsByClassName("polynomial");
+      for (var i = 0; i < p.length; i++) {
+        p[i].innerHTML = "";
+        n.push([]);
+        for (var j = 0; j <= 2; j++) {
+          addNum(i, j);
+        }
+        p[i].innerHTML += "<br><button class='remove' onclick='removeNum(" + i +")'>-</button><button class='add' onclick='addNum(" + i + ")'>+</button>";
+      }
+      function compute() {
+        var a = [];
+        var b = [];
+        for (var i = 0; i < n.length; i++) {
+          for (var j = 0; j < n[i].length; j++) {
+            switch(i) {
+              case 0:
+                a.push(document.getElementById("num" + i + "-" + j).value);
+              break;
+              case 1:
+                b.push(document.getElementById("num" + i + "-" + j).value);
+              break;
+            }
+          }
+        }
+        var r = [];
+        var t = [];
+        for (var i = 0; i < a.length; i++) {
+          t = [];
+          r[i] = a[i] / b[0];
+          for (var j = 0; j < b.length; j++) {
+            t[j] = b[j] * a[i] / b[0];
+          }
+          for (var j = 0; j < b.length; j++) {
+            if (a[i + j] !== undefined) {
+              a[i + j] -= t[j];
+            }
+          }
+        }
+        var remainder = r.pop();
+        r = r.reverse();
+        var p = "";
+        for (var i = 0; i < r.length; i++) {
+          if (r[i] !== 0) {
+            p += (r[i] >= 0 && i !== 0 ? "+" : "") + (r[i] !== 1 || i === r.length - 1 ? r[i] : "") + (i !== r.length - 1 ? "x" + (i !== r.length - 2 ? "<div class='small'>" + (r.length - i - 1) + "</div>" : "") : "");
+          }
+        }
+        p = p.split("-").join(" - ");
+        p = p.split("+").join(" + ");
+        
+        var p2 = "";
+        for (var i = 0; i < b.length; i++) {
+          if (b[i] !== 0) {
+            p2 += (b[i] >= 0 && i !== 0 ? "+" : "") + (b[i] !== 1 || i === b.length - 1 ? b[i] : "") + (i !== b.length - 1 ? "x" + (i !== b.length - 2 ? "<div class='small'>" + (b.length - i - 1) + "</div>" : "") : "");
+          }
+        }
+        p2 = p2.split("-").join(" - ");
+        p2 = p2.split("+").join(" + ");
+        document.getElementById("answer").style.display = "block";
+        document.getElementById("answer").innerHTML = "= " + p + (remainder !== 0 ? "<br><br>Remainder: " + remainder + " / " + p2 : "");
+      }
+    </script>
+  </body>
+</html>
