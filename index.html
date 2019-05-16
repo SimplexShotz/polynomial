@@ -167,7 +167,7 @@
         var b = document.getElementById("num2-1").value;
         var c = document.getElementById("num2-0").value;
         document.getElementById("answer2").style.display = "block";
-        document.getElementById("answer2").innerHTML = "x = " + (b !== "0" ? (Math.floor(Math.sqrt(Math.abs((b * b) - 4 * a * c))) === Math.sqrt(Math.abs((b * b) - 4 * a * c)) ? -b / 2 * a : -b) + " " : "") + "± " + (Math.floor(Math.sqrt(Math.abs((b * b) - 4 * a * c))) === Math.sqrt(Math.abs((b * b) - 4 * a * c)) ? (Math.sqrt(Math.abs((b * b) - 4 * a * c)) / (2 * a)) : "√<div class='sqrt'>" + Math.abs((b * b) - 4 * a * c) + "</div>") + ((b * b) - 4 * a * c < 0 ? "i" : "") + (Math.floor(Math.sqrt(Math.abs((b * b) - 4 * a * c))) === Math.sqrt(Math.abs((b * b) - 4 * a * c)) ? "" : "<br><div class='line'></div>&nbsp&nbsp&nbsp" + (2 * a));
+        document.getElementById("answer2").innerHTML = "x = " + (b !== "0" ? (Math.floor(Math.sqrt(Math.abs((b * b) - 4 * a * c))) === Math.sqrt(Math.abs((b * b) - 4 * a * c)) ? -b / (2 * a) : -b) + " " : "") + "± " + (Math.floor(Math.sqrt(Math.abs((b * b) - 4 * a * c))) === Math.sqrt(Math.abs((b * b) - 4 * a * c)) ? (Math.sqrt(Math.abs((b * b) - 4 * a * c)) / (2 * a)) : "√<div class='sqrt'>" + Math.abs((b * b) - 4 * a * c) + "</div>") + ((b * b) - 4 * a * c < 0 ? "i" : "") + (Math.floor(Math.sqrt(Math.abs((b * b) - 4 * a * c))) === Math.sqrt(Math.abs((b * b) - 4 * a * c)) ? "" : "<br><div class='line'></div>&nbsp&nbsp&nbsp" + (2 * a));
       }
     </script>
   </body>
